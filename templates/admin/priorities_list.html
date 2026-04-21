@@ -1,0 +1,28 @@
+{% extends "admin/_layout.html" %}
+{% block admin_title %}الأولويات{% endblock %}
+
+{% block admin_content %}
+<h1>🎯 الأولويات</h1>
+<form method="post" action="{{ url_for('admin.priority_new') }}" style="margin-bottom:16px;">
+    <button class="btn btn-primary" type="submit">+ إضافة أولوية</button>
+</form>
+<table class="table">
+    <thead><tr><th>#</th><th>الأيقونة</th><th>العنوان</th><th>النشر</th><th></th></tr></thead>
+    <tbody>
+        {% for p in items %}
+        <tr>
+            <td>{{ p.sort_order }}</td>
+            <td style="font-size:1.4em;">{{ p.icon or '—' }}</td>
+            <td>{{ p.title_ar }}<div style="color:var(--ink-dim);font-size:0.85em;">{{ p.body_ar[:120] if p.body_ar else '' }}{% if p.body_ar and p.body_ar|length > 120 %}…{% endif %}</div></td>
+            <td>{% if p.is_published %}<span style="color:#8fe79b;">منشور</span>{% else %}<span style="color:#f2d98a;">مخفي</span>{% endif %}</td>
+            <td>
+                <a href="{{ url_for('admin.priority_edit', item_id=p.id) }}" class="btn btn-sm">تحرير</a>
+                <form method="post" action="{{ url_for('admin.priority_delete', item_id=p.id) }}" style="display:inline;" onsubmit="return confirm('حذف هذه الأولوية؟');">
+                    <button type="submit" class="btn btn-sm btn-danger">حذف</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "admin/_layout.html" %}
+{% block admin_title %}الرسائل الواردة{% endblock %}
+
+{% block admin_content %}
+<h1>✉ الرسائل الواردة ({{ items|length }})</h1>
+{% if items %}
+<table class="table">
+    <thead><tr><th>التاريخ</th><th>الاسم</th><th>الاهتمام</th><th>جوال</th><th>بريد</th><th>الرسالة</th><th></th></tr></thead>
+    <tbody>
+        {% for m in items %}
+        <tr style="{% if not m.is_read %}background:rgba(200,162,78,0.06);{% endif %}">
+            <td style="white-space:nowrap;">{{ m.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td><strong>{{ m.name }}</strong>{% if not m.is_read %} <span class="badge badge-head" style="font-size:10px;">جديد</span>{% endif %}</td>
+            <td>{{ m.interest or '—' }}</td>
+            <td dir="ltr">{{ m.phone or '—' }}</td>
+            <td dir="ltr">{{ m.email or '—' }}</td>
+            <td style="max-width:400px;white-space:normal;">{{ m.message or '—' }}</td>
+            <td style="white-space:nowrap;">
+                <form method="post" action="{{ url_for('admin.message_toggle_read', item_id=m.id) }}" style="display:inline;">
+                    <button class="btn btn-sm" type="submit">{% if m.is_read %}وضع كغير مقروءة{% else %}وضع كمقروءة{% endif %}</button>
+                </form>
+                <form method="post" action="{{ url_for('admin.message_delete', item_id=m.id) }}" style="display:inline;" onsubmit="return confirm('حذف الرسالة؟');">
+                    <button class="btn btn-sm btn-danger" type="submit">حذف</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="card empty-state">لا توجد رسائل واردة بعد.</div>
+{% endif %}
+{% endblock %}

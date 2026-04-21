@@ -1,0 +1,30 @@
+# Fly.io config for قائمة البناء والتنمية campaign site.
+# Adjust `app` to your chosen Fly app name on first `fly launch`.
+app = "bayt-sahour-list"
+primary_region = "cdg"   # Paris — closest free region to Palestine
+
+[build]
+
+[env]
+  PORT = "8080"
+  SESSION_COOKIE_SECURE = "1"
+  DATA_DIR = "/data"
+  UPLOAD_DIR = "/data/photos"
+
+# Persistent disk for SQLite + uploaded candidate photos.
+# Create once:  fly volumes create site_data --region cdg --size 1
+[[mounts]]
+  source = "site_data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0   # set to 1 to avoid cold-start delay (uses more free allowance)
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256

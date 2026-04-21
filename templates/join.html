@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}انضم إلينا — قائمة البناء والتنمية{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container narrow">
+        <div class="section-head reveal">
+            <div class="section-kicker">انضم إلينا</div>
+            <h1>صوتك، وقتك، أو سؤالك — كلها مهمة</h1>
+            <p>اختر طريقة الدعم التي تناسبك. سنتواصل معك مباشرة.</p>
+        </div>
+
+        <div class="card reveal">
+            <form method="post">
+                <div class="form-grid">
+                    <div class="form-row">
+                        <label for="name">الاسم الكامل *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="phone">رقم الجوال</label>
+                        <input type="tel" id="phone" name="phone" dir="ltr">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="email">البريد الإلكتروني</label>
+                    <input type="email" id="email" name="email" dir="ltr">
+                </div>
+                <div class="form-row">
+                    <label for="interest">كيف تريد المساهمة؟</label>
+                    <select id="interest" name="interest">
+                        <option value="volunteer">أريد التطوع مع الحملة</option>
+                        <option value="reminder">ذكّرني بموعد الانتخابات</option>
+                        <option value="question">لديّ سؤال</option>
+                        <option value="donate">أريد دعم الحملة</option>
+                        <option value="other">شيء آخر</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="message">رسالتك (اختياري)</label>
+                    <textarea id="message" name="message" rows="5"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">إرسال ←</button>
+            </form>
+        </div>
+
+        {% if site and (site.contact_phone or site.contact_email or site.whatsapp_url) %}
+        <div class="card reveal mt-6">
+            <h3 class="text-gold">تواصل مباشر</h3>
+            <p style="margin-top:12px;">
+                {% if site.contact_phone %}<div>📞 <a href="tel:{{ site.contact_phone }}">{{ site.contact_phone }}</a></div>{% endif %}
+                {% if site.contact_email %}<div>✉ <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a></div>{% endif %}
+                {% if site.whatsapp_url %}<div>💬 <a href="{{ site.whatsapp_url }}" target="_blank" rel="noopener">WhatsApp</a></div>{% endif %}
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

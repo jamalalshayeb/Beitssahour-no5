@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}أسئلة شائعة — قائمة البناء والتنمية{% endblock %}
+
+{% block head_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for item in items %}
+    {
+      "@type": "Question",
+      "name": "{{ item.question_ar|e }}",
+      "acceptedAnswer": { "@type": "Answer", "text": "{{ item.answer_ar|e }}" }
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container narrow">
+        <div class="section-head reveal">
+            <div class="section-kicker">FAQ</div>
+            <h1>أسئلة شائعة</h1>
+            <p>إجابات مباشرة على أكثر الأسئلة التي تصلنا من الناخبين.</p>
+        </div>
+        <div class="faq">
+            {% for item in items %}
+            <details class="reveal">
+                <summary>{{ item.question_ar }}</summary>
+                <div class="answer">{{ item.answer_ar }}</div>
+            </details>
+            {% endfor %}
+        </div>
+        <p class="text-center mt-6">
+            لم تجد إجابتك؟ <a href="{{ url_for('public.join') }}">أرسل سؤالك مباشرة</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

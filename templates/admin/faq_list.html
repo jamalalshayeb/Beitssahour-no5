@@ -1,0 +1,27 @@
+{% extends "admin/_layout.html" %}
+{% block admin_title %}الأسئلة الشائعة{% endblock %}
+
+{% block admin_content %}
+<h1>❓ الأسئلة الشائعة</h1>
+<form method="post" action="{{ url_for('admin.faq_new') }}" style="margin-bottom:16px;">
+    <button class="btn btn-primary" type="submit">+ إضافة سؤال</button>
+</form>
+<table class="table">
+    <thead><tr><th>#</th><th>السؤال</th><th>النشر</th><th></th></tr></thead>
+    <tbody>
+        {% for q in items %}
+        <tr>
+            <td>{{ q.sort_order }}</td>
+            <td>{{ q.question_ar }}<div style="color:var(--ink-dim);font-size:0.85em;">{{ q.answer_ar[:120] }}{% if q.answer_ar|length > 120 %}…{% endif %}</div></td>
+            <td>{% if q.is_published %}<span style="color:#8fe79b;">منشور</span>{% else %}<span style="color:#f2d98a;">مخفي</span>{% endif %}</td>
+            <td>
+                <a href="{{ url_for('admin.faq_edit', item_id=q.id) }}" class="btn btn-sm">تحرير</a>
+                <form method="post" action="{{ url_for('admin.faq_delete', item_id=q.id) }}" style="display:inline;" onsubmit="return confirm('حذف هذا السؤال؟');">
+                    <button type="submit" class="btn btn-sm btn-danger">حذف</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

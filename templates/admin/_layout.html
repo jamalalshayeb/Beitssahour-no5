@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{% block admin_title %}لوحة الإدارة{% endblock %} — قائمة البناء والتنمية{% endblock %}
+
+{% block content %}
+<div class="admin-layout">
+    <aside class="admin-side">
+        <h3>🛠 لوحة الإدارة</h3>
+        {% set ep = request.endpoint or '' %}
+        <a href="{{ url_for('admin.dashboard') }}" {% if ep == 'admin.dashboard' %}class="active"{% endif %}>📊 نظرة عامة</a>
+        <a href="{{ url_for('admin.candidates_list') }}" {% if 'candidate' in ep %}class="active"{% endif %}>👥 المرشحون</a>
+        <a href="{{ url_for('admin.priorities_list') }}" {% if 'priorit' in ep %}class="active"{% endif %}>🎯 الأولويات</a>
+        <a href="{{ url_for('admin.program_list') }}" {% if 'program' in ep %}class="active"{% endif %}>📋 البرنامج</a>
+        <a href="{{ url_for('admin.faq_list') }}" {% if 'faq' in ep %}class="active"{% endif %}>❓ الأسئلة الشائعة</a>
+        <a href="{{ url_for('admin.messages_list') }}" {% if 'message' in ep %}class="active"{% endif %}>✉ الرسائل الواردة</a>
+        <a href="{{ url_for('admin.settings') }}" {% if ep == 'admin.settings' %}class="active"{% endif %}>⚙ إعدادات الموقع</a>
+        <a href="{{ url_for('public.home') }}">🌐 عرض الموقع</a>
+        <a href="{{ url_for('admin.logout') }}" style="margin-top:18px;color:#f59da6;">↩ تسجيل الخروج</a>
+    </aside>
+    <section class="admin-main">
+        {% block admin_content %}{% endblock %}
+    </section>
+</div>
+{% endblock %}

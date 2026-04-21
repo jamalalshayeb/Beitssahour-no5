@@ -1,0 +1,18 @@
+{% extends "admin/_layout.html" %}
+{% block admin_title %}تحرير سؤال شائع{% endblock %}
+
+{% block admin_content %}
+<h1>✏️ تحرير سؤال شائع</h1>
+<div class="card">
+    <form method="post">
+        <div class="form-row"><label>الترتيب</label><input type="number" name="sort_order" value="{{ q.sort_order }}"></div>
+        <div class="form-row"><label>السؤال *</label><input type="text" name="question_ar" value="{{ q.question_ar }}" required></div>
+        <div class="form-row"><label>الإجابة *</label><textarea name="answer_ar" rows="6" required>{{ q.answer_ar }}</textarea></div>
+        <div class="checkbox-row"><input type="checkbox" name="is_published" id="pub" {% if q.is_published %}checked{% endif %}><label for="pub" style="margin:0;">منشور</label></div>
+        <p style="margin-top:16px;">
+            <button type="submit" class="btn btn-primary">💾 حفظ</button>
+            <a href="{{ url_for('admin.faq_list') }}" class="btn">رجوع</a>
+        </p>
+    </form>
+</div>
+{% endblock %}

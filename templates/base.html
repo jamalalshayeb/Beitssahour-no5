@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#c8a24e">
+    {% set page_title = self.title()|trim %}
+    {% set full_title = page_title if page_title else (site.list_name_ar if site else 'قائمة البناء والتنمية') %}
+    <title>{{ full_title }}</title>
+    {% block meta_description %}
+    <meta name="description" content="{{ site.hero_subheadline_ar if site and site.hero_subheadline_ar else 'قائمة البناء والتنمية — انتخابات بلدية بيت ساحور. خبرات متنوعة تخدم المدينة.' }}">
+    {% endblock %}
+    <meta name="keywords" content="قائمة البناء والتنمية, بيت ساحور, انتخابات بلدية, {{ site.election_year if site else 2026 }}, قائمة رقم 5">
+    <meta name="author" content="{{ site.list_name_ar if site else 'قائمة البناء والتنمية' }}">
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:site_name" content="{{ site.list_name_ar if site else 'قائمة البناء والتنمية' }}">
+    <meta property="og:title" content="{{ full_title }}">
+    <meta property="og:description" content="{{ site.hero_subheadline_ar if site and site.hero_subheadline_ar else 'قائمة انتخابية لبلدية بيت ساحور' }}">
+    <meta property="og:image" content="{{ url_for('static', filename='img/logo.jpg', _external=True) }}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ar_PS">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ full_title }}">
+    <meta name="twitter:description" content="{{ site.hero_subheadline_ar if site and site.hero_subheadline_ar else 'قائمة انتخابية لبلدية بيت ساحور' }}">
+    <meta name="twitter:image" content="{{ url_for('static', filename='img/logo.jpg', _external=True) }}">
+
+    <!-- JSON-LD: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "{{ site.list_name_ar if site else 'قائمة البناء والتنمية' }}",
+      "url": "{{ request.url_root }}",
+      "logo": "{{ url_for('static', filename='img/logo.jpg', _external=True) }}",
+      "description": "{{ site.hero_subheadline_ar if site and site.hero_subheadline_ar else 'قائمة انتخابية لبلدية بيت ساحور' }}",
+      "address": { "@type": "PostalAddress", "addressLocality": "بيت ساحور", "addressCountry": "PS" }
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/logo.jpg') }}" type="image/jpeg">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/logo.jpg') }}">
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+    <div class="flag-stripe" aria-hidden="true">
+        <div class="flag-black"></div>
+        <div class="flag-white"></div>
+        <div class="flag-green"></div>
+        <div class="flag-red"></div>
+    </div>
+
+    <nav class="site-nav" aria-label="القائمة الرئيسية">
+        <div class="site-nav-inner">
+            <a class="brand" href="{{ url_for('public.home') }}">
+                <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="شعار قائمة البناء والتنمية">
+                <div class="brand-text">
+                    <strong>البناء والتنمية</strong>
+                    <small>بلدية بيت ساحور {{ site.election_year if site else '2026' }}</small>
+                </div>
+            </a>
+            <button class="nav-toggle" aria-label="فتح القائمة" onclick="document.getElementById('nav-links').classList.toggle('open')">☰</button>
+            <ul class="nav-links" id="nav-links">
+                {% set ep = request.endpoint or '' %}
+                <li><a href="{{ url_for('public.home') }}" {% if ep == 'public.home' %}class="active"{% endif %}>الرئيسية</a></li>
+                <li><a href="{{ url_for('public.candidates_list') }}" {% if 'candidate' in ep %}class="active"{% endif %}>المرشحون</a></li>
+                <li><a href="{{ url_for('public.priorities') }}" {% if ep == 'public.priorities' %}class="active"{% endif %}>أولوياتنا</a></li>
+                <li><a href="{{ url_for('public.program') }}" {% if ep == 'public.program' %}class="active"{% endif %}>البرنامج</a></li>
+                <li><a href="{{ url_for('public.faq') }}" {% if ep == 'public.faq' %}class="active"{% endif %}>أسئلة شائعة</a></li>
+                <li><a href="{{ url_for('public.about') }}" {% if ep == 'public.about' %}class="active"{% endif %}>عن القائمة</a></li>
+            </ul>
+            <a href="{{ url_for('public.join') }}" class="nav-cta">
+                <span class="num">{{ site.list_number if site and site.list_number else '5' }}</span>
+                انضم إلينا
+            </a>
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-stack">
+                {% for cat, msg in messages %}
+                    <div class="flash flash-{{ cat }}">{{ msg }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-col brand-col">
+                <h4><span class="gold">قائمة البناء والتنمية</span></h4>
+                <p>{{ site.municipality_ar if site else 'بلدية بيت ساحور' }} — انتخابات {{ site.election_year if site else '2026' }}</p>
+                {% if site and site.slogan_ar %}<div class="slogan">"{{ site.slogan_ar }}"</div>{% endif %}
+            </div>
+            <div class="footer-col">
+                <h4>روابط</h4>
+                <ul>
+                    <li><a href="{{ url_for('public.home') }}">الرئيسية</a></li>
+                    <li><a href="{{ url_for('public.candidates_list') }}">المرشحون</a></li>
+                    <li><a href="{{ url_for('public.program') }}">البرنامج</a></li>
+                    <li><a href="{{ url_for('public.faq') }}">أسئلة شائعة</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>تواصل</h4>
+                <ul>
+                    {% if site and site.contact_phone %}<li>📞 <a href="tel:{{ site.contact_phone }}">{{ site.contact_phone }}</a></li>{% endif %}
+                    {% if site and site.contact_email %}<li>✉ <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a></li>{% endif %}
+                    {% if site and site.contact_address_ar %}<li>📍 {{ site.contact_address_ar }}</li>{% endif %}
+                    <li><a href="{{ url_for('public.join') }}">نموذج الانضمام</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>تابعونا</h4>
+                <div class="social-row">
+                    {% if site and site.facebook_url %}<a href="{{ site.facebook_url }}" target="_blank" rel="noopener" aria-label="Facebook">f</a>{% endif %}
+                    {% if site and site.instagram_url %}<a href="{{ site.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram">◎</a>{% endif %}
+                    {% if site and site.tiktok_url %}<a href="{{ site.tiktok_url }}" target="_blank" rel="noopener" aria-label="TikTok">♪</a>{% endif %}
+                    {% if site and site.whatsapp_url %}<a href="{{ site.whatsapp_url }}" target="_blank" rel="noopener" aria-label="WhatsApp">🟢</a>{% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <small>© {{ site.election_year if site else 2026 }} قائمة البناء والتنمية — جميع الحقوق محفوظة</small>
+        </div>
+    </footer>
+
+    {% if request.endpoint and not request.endpoint.startswith('admin.') %}
+    <div class="vote-bar" aria-hidden="false">
+        <span>صوّت <b>{{ site.list_number if site and site.list_number else '5' }}</b> — قائمة البناء والتنمية</span>
+        <a href="{{ url_for('public.join') }}" class="btn btn-red btn-sm">انضم</a>
+    </div>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/site.js') }}" defer></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

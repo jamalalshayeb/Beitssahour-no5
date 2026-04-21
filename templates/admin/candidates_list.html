@@ -1,0 +1,48 @@
+{% extends "admin/_layout.html" %}
+{% block admin_title %}المرشحون{% endblock %}
+
+{% block admin_content %}
+<h1>👥 المرشحون</h1>
+<p style="margin-bottom:16px;">
+    <a href="{{ url_for('admin.candidate_new') }}" class="btn btn-primary">+ إضافة مرشح</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>الصورة</th>
+            <th>الاسم</th>
+            <th>الوسم</th>
+            <th>الحالة</th>
+            <th>إجراءات</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in candidates %}
+        <tr>
+            <td>{{ c.position }}</td>
+            <td>
+                {% if c.photo_filename %}
+                    <img src="{{ url_for('static', filename='uploads/photos/' + c.photo_filename) }}" alt="" style="width:48px;height:64px;object-fit:cover;border-radius:6px;">
+                {% else %}—{% endif %}
+            </td>
+            <td>
+                {{ c.display_name_ar }}
+                {% if c.is_head_of_list %}<span class="badge-head" style="margin-right:6px;">⭐ رئيس</span>{% endif %}
+            </td>
+            <td>{{ c.tagline_ar or '—' }}</td>
+            <td>
+                {% if c.is_published %}<span style="color:#8fe79b;">منشور</span>
+                {% else %}<span style="color:#f2d98a;">مخفي</span>{% endif %}
+            </td>
+            <td>
+                <a href="{{ url_for('admin.candidate_edit', candidate_id=c.id) }}" class="btn btn-sm">تحرير</a>
+                <form method="post" action="{{ url_for('admin.candidate_delete', candidate_id=c.id) }}" style="display:inline;" onsubmit="return confirm('حذف {{ c.name_ar }}؟');">
+                    <button class="btn btn-sm btn-danger" type="submit">حذف</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

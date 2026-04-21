@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% block title %}{{ site.list_name_ar if site else 'قائمة البناء والتنمية' }} — بلدية بيت ساحور {{ site.election_year if site else 2026 }}{% endblock %}
+
+{% block content %}
+
+{# ---------- HERO ---------- #}
+<section class="hero">
+    <div class="hero-eyebrow"><span class="pulse"></span> انتخابات بلدية بيت ساحور {{ site.election_year if site else 2026 }}</div>
+    <img class="hero-logo" src="{{ url_for('static', filename='img/logo.jpg') }}" alt="شعار قائمة البناء والتنمية">
+    <h1>{{ site.hero_headline_ar if site and site.hero_headline_ar else 'نبني بيت ساحور معاً' }}</h1>
+    <p class="sub">{{ site.hero_subheadline_ar if site and site.hero_subheadline_ar else 'قائمة تجمع الخبرات الهندسية والمالية والإدارية والمجتمعية لخدمة مدينة تستحق الأفضل.' }}</p>
+
+    <div class="hero-cta-row">
+        <a href="{{ url_for('public.candidates_list') }}" class="btn btn-primary">تعرّف على المرشحين ←</a>
+        <a href="{{ url_for('public.program') }}" class="btn btn-ghost">اقرأ البرنامج</a>
+    </div>
+
+    {% if site and site.election_date %}
+    <div id="countdown" class="countdown" data-target="{{ site.election_date.isoformat() }}" aria-label="العد التنازلي ليوم الانتخابات">
+        <div class="countdown-unit"><b data-unit="d">—</b><span>يوم</span></div>
+        <div class="countdown-unit"><b data-unit="h">—</b><span>ساعة</span></div>
+        <div class="countdown-unit"><b data-unit="m">—</b><span>دقيقة</span></div>
+        <div class="countdown-unit"><b data-unit="s">—</b><span>ثانية</span></div>
+    </div>
+    {% endif %}
+</section>
+
+<div class="gold-stripe"></div>
+
+{# ---------- STATS ---------- #}
+<section class="section">
+    <div class="container">
+        <div class="stats reveal" role="list">
+            {% for s in stats %}
+            <div class="stat" role="listitem">
+                {% if s.animate %}
+                    <b>{{ s.prefix }}<span data-count="{{ s.number }}">0</span>{{ s.suffix }}</b>
+                {% else %}
+                    <b>{{ s.raw }}</b>
+                {% endif %}
+                <span>{{ s.label }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{# ---------- PRIORITIES ---------- #}
+{% if priorities %}
+<section class="section">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="section-kicker">أولوياتنا</div>
+            <h2>ما الذي سنعمل عليه فعلاً</h2>
+            <p>التزامات محددة — لا شعارات فضفاضة. كل أولوية تترجم إلى خطوات عملية خلال السنوات الأربع القادمة.</p>
+        </div>
+        <div class="priorities-grid">
+            {% for p in priorities %}
+            <article class="priority reveal">
+                {% if p.icon %}<div class="icon" aria-hidden="true">{{ p.icon }}</div>{% endif %}
+                <h3>{{ p.title_ar }}</h3>
+                {% if p.body_ar %}<p>{{ p.body_ar }}</p>{% endif %}
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{# ---------- FEATURED (HEAD OF LIST) ---------- #}
+{% if head %}
+<section class="section">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="section-kicker">رئيس القائمة</div>
+            <h2>القيادة التي تستحقها بيت ساحور</h2>
+        </div>
+        <div class="featured reveal">
+            <div class="photo-wrap">
+                {% if head.photo_filename %}
+                    <img src="{{ url_for('static', filename='uploads/photos/' + head.photo_filename) }}" alt="{{ head.name_ar }}">
+                {% endif %}
+            </div>
+            <div>
+                <div class="role">{{ head.title_ar or 'رئيس القائمة' }}</div>
+                <h2>{{ head.name_ar }}</h2>
+                {% if head.tagline_ar %}<p class="lead">{{ head.tagline_ar }}</p>{% endif %}
+                {% if head.bio_ar %}<p>{{ head.bio_ar[:420] }}{% if head.bio_ar|length > 420 %}…{% endif %}</p>{% endif %}
+                <p style="margin-top:24px;"><a href="{{ url_for('public.candidate_detail', candidate_id=head.id) }}" class="btn btn-primary">السيرة الكاملة ←</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{# ---------- CANDIDATES GRID ---------- #}
+<section class="section">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="section-kicker">فريق القائمة</div>
+            <h2>ثلاثة عشر مرشحاً ومرشحة</h2>
+            <p>هندسة كهربائية وميكانيكية ومدنية، محاسبة ومصارف، تأمين وسياحة، تربية ومجتمع — كل واحد منهم أثبت كفاءته في مجاله.</p>
+        </div>
+        <div class="candidates-grid">
+            {% for c in candidates %}
+                {% if not c.is_head_of_list %}
+                <a class="candidate-card reveal" href="{{ url_for('public.candidate_detail', candidate_id=c.id) }}">
+                    {% if c.photo_filename %}
+                        <img class="candidate-photo" src="{{ url_for('static', filename='uploads/photos/' + c.photo_filename) }}" alt="{{ c.name_ar }}" loading="lazy">
+                    {% else %}
+                        <div class="candidate-photo placeholder" aria-hidden="true">👤</div>
+                    {% endif %}
+                    <div class="candidate-body">
+                        <div class="candidate-badges">
+                            <span class="badge badge-pos">#{{ c.position }}</span>
+                        </div>
+                        <div class="candidate-name">{{ c.display_name_ar }}</div>
+                        <div class="candidate-tag">{{ c.tagline_ar or '' }}</div>
+                    </div>
+                </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <p class="text-center mt-6">
+            <a href="{{ url_for('public.candidates_list') }}" class="btn btn-ghost">عرض السير الكاملة ←</a>
+        </p>
+    </div>
+</section>
+
+{# ---------- PROGRAM PREVIEW ---------- #}
+{% if program %}
+<section class="section">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="section-kicker">البرنامج الانتخابي</div>
+            <h2>ثماني ركائز لبلدية أفضل</h2>
+            <p>برنامج متكامل، من الشفافية المالية إلى التحول الرقمي، مع خطط زمنية معلنة.</p>
+        </div>
+        <div class="program-grid">
+            {% for s in program %}
+            <article class="program-card reveal">
+                {% if s.icon %}<div class="icon">{{ s.icon }}</div>{% endif %}
+                <h3>{{ s.title_ar }}</h3>
+                {% if s.summary_ar %}<p>{{ s.summary_ar }}</p>{% endif %}
+            </article>
+            {% endfor %}
+        </div>
+        <p class="text-center mt-6">
+            <a href="{{ url_for('public.program') }}" class="btn btn-ghost">البرنامج الكامل ←</a>
+        </p>
+    </div>
+</section>
+{% endif %}
+
+{# ---------- FINAL CTA ---------- #}
+<section class="cta">
+    <div class="cta-box reveal">
+        <div class="hero-eyebrow"><span class="pulse"></span> يوم الانتخابات قريب</div>
+        <h2>{{ site.slogan_ar if site and site.slogan_ar else 'بيت ساحور تستحق الأفضل — معاً نبني مستقبلنا' }}</h2>
+        <p>صوتك قرار، وحضورك في صندوق الاقتراع هو الفرق بين كلام ووعود، وبين تنفيذ فعلي.</p>
+        <div class="hero-cta-row" style="justify-content:center;">
+            <a href="{{ url_for('public.join') }}" class="btn btn-red">صوّت {{ site.list_number if site and site.list_number else '5' }} — انضم إلينا</a>
+            <a href="{{ url_for('public.faq') }}" class="btn btn-ghost">لديك سؤال؟</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

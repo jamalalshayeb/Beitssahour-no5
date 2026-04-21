@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}المرشحون — قائمة البناء والتنمية{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="section-kicker">فريق القائمة</div>
+            <h1>المرشحون ({{ candidates|length }})</h1>
+            <p>خبرات متنوعة — من الهندسة والمقاولات إلى المصارف والمحاسبة والقانون والسياحة والتربية والعمل المجتمعي.</p>
+        </div>
+        <div class="candidates-grid">
+            {% for c in candidates %}
+            <a class="candidate-card reveal" href="{{ url_for('public.candidate_detail', candidate_id=c.id) }}">
+                {% if c.photo_filename %}
+                    <img class="candidate-photo" src="{{ url_for('static', filename='uploads/photos/' + c.photo_filename) }}" alt="{{ c.name_ar }}" loading="lazy">
+                {% else %}
+                    <div class="candidate-photo placeholder" aria-hidden="true">👤</div>
+                {% endif %}
+                <div class="candidate-body">
+                    <div class="candidate-badges">
+                        {% if c.is_head_of_list %}
+                            <span class="badge badge-head">⭐ رئيس القائمة</span>
+                        {% else %}
+                            <span class="badge badge-pos">#{{ c.position }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="candidate-name">{{ c.display_name_ar }}</div>
+                    <div class="candidate-tag">{{ c.tagline_ar or '' }}</div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

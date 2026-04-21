@@ -1,0 +1,130 @@
+{% extends "admin/_layout.html" %}
+{% block admin_title %}تحرير مرشح{% endblock %}
+
+{% block admin_content %}
+<h1>✏️ تحرير مرشح</h1>
+
+<div class="card">
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-grid">
+            <div class="form-row">
+                <label>الترتيب في القائمة</label>
+                <input type="number" name="position" value="{{ c.position }}" min="1">
+            </div>
+            <div class="form-row">
+                <label>اللقب (اختياري)</label>
+                <input type="text" name="title_ar" value="{{ c.title_ar or '' }}" placeholder="مثل: المهندس / المحاسب القانوني">
+            </div>
+            <div class="form-row">
+                <label>الاسم (عربي) *</label>
+                <input type="text" name="name_ar" value="{{ c.name_ar }}" required>
+            </div>
+            <div class="form-row">
+                <label>الاسم (إنجليزي)</label>
+                <input type="text" name="name_en" value="{{ c.name_en or '' }}">
+            </div>
+            <div class="form-row" style="grid-column:1/-1;">
+                <label>الاسم الكامل الرسمي (عربي)</label>
+                <input type="text" name="full_legal_name_ar" value="{{ c.full_legal_name_ar or '' }}">
+            </div>
+            <div class="form-row" style="grid-column:1/-1;">
+                <label>الوسم / سطر التعريف القصير</label>
+                <input type="text" name="tagline_ar" value="{{ c.tagline_ar or '' }}" maxlength="300">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <label>نبذة (عربي)</label>
+            <textarea name="bio_ar" rows="6">{{ c.bio_ar or '' }}</textarea>
+        </div>
+        <div class="form-row">
+            <label>نبذة (إنجليزي)</label>
+            <textarea name="bio_en" rows="6">{{ c.bio_en or '' }}</textarea>
+        </div>
+        <div class="form-row">
+            <label>لماذا أترشح (عربي)</label>
+            <textarea name="why_running_ar" rows="4">{{ c.why_running_ar or '' }}</textarea>
+        </div>
+        <div class="form-row">
+            <label>لماذا أترشح (إنجليزي)</label>
+            <textarea name="why_running_en" rows="4">{{ c.why_running_en or '' }}</textarea>
+        </div>
+
+        <div class="form-grid">
+            <div class="form-row">
+                <label>الصورة</label>
+                {% if c.photo_filename %}
+                    <div style="margin-bottom:8px;">
+                        <img src="{{ url_for('static', filename='uploads/photos/' + c.photo_filename) }}" alt="" style="width:120px;border-radius:8px;">
+                    </div>
+                {% endif %}
+                <input type="file" name="photo" accept="image/*">
+                <div class="hint">ستُحفظ كصورة JPEG بعرض 900px (حد أقصى).</div>
+            </div>
+            <div class="form-row">
+                <label>حالة النشر</label>
+                <div class="checkbox-row">
+                    <input type="checkbox" name="is_published" id="pub" {% if c.is_published %}checked{% endif %}>
+                    <label for="pub" style="margin:0;">منشور على الموقع</label>
+                </div>
+                <div class="checkbox-row" style="margin-top:8px;">
+                    <input type="checkbox" name="is_head_of_list" id="head" {% if c.is_head_of_list %}checked{% endif %}>
+                    <label for="head" style="margin:0;">رئيس القائمة</label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">💾 حفظ</button>
+        <a href="{{ url_for('admin.candidates_list') }}" class="btn">رجوع</a>
+        {% if c.is_published %}
+            <a href="{{ url_for('public.candidate_detail', candidate_id=c.id) }}" target="_blank" class="btn">👁 معاينة</a>
+        {% endif %}
+    </form>
+</div>
+
+{% if c.id %}
+<div class="card" id="cv" style="margin-top:24px;">
+    <h2 class="section-title" style="font-size:1.25em;">📜 بنود السيرة الذاتية</h2>
+    <form method="post" action="{{ url_for('admin.cv_add', candidate_id=c.id) }}" class="form-grid" style="grid-template-columns:180px 1fr auto;">
+        <div class="form-row" style="margin:0;">
+            <select name="category">
+                <option value="education">التعليم</option>
+                <option value="experience">الخبرة المهنية</option>
+                <option value="memberships">العضويات</option>
+                <option value="community">العمل المجتمعي</option>
+                <option value="awards">جوائز</option>
+                <option value="skills">مهارات</option>
+                <option value="other">أخرى</option>
+            </select>
+        </div>
+        <div class="form-row" style="margin:0;">
+            <input type="text" name="text_ar" placeholder="نص البند…" required>
+        </div>
+        <div class="form-row" style="margin:0;">
+            <button type="submit" class="btn btn-primary">+ إضافة</button>
+        </div>
+    </form>
+
+    {% if cv_items %}
+    <table class="table" style="margin-top:16px;">
+        <thead><tr><th>الفئة</th><th>النص</th><th></th></tr></thead>
+        <tbody>
+        {% for item in cv_items %}
+        <tr>
+            <td>{{ cv_label_ar.get(item.category, item.category) }}</td>
+            <td>{{ item.text_ar }}</td>
+            <td>
+                <form method="post" action="{{ url_for('admin.cv_delete', item_id=item.id) }}" style="margin:0;">
+                    <button type="submit" class="btn btn-sm btn-danger">حذف</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="margin-top:12px;color:rgba(255,255,255,0.55);">لا توجد بنود بعد.</p>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

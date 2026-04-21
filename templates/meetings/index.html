@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}نظام إدارة الاجتماعات — قائمة البناء والتنمية{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1 class="section-title"><span class="icon">🏛️</span> نظام إدارة اجتماعات المجلس واللجان</h1>
+        <div class="card">
+            <p style="color:rgba(255,255,255,0.9);line-height:2;">
+                منصة رقمية لإدارة اجتماعات المجلس البلدي واللجان الفرعية داخل البلدية:
+                جدولة الاجتماعات، إدارة جدول الأعمال، تسجيل الحضور، تدوين المحاضر،
+                إدارة المرفقات، والتصويت الإلكتروني على القرارات.
+            </p>
+            <p style="color:#d4a843;margin-top:12px;">
+                🛠️ الوحدة قيد التطوير — التفاصيل والسير الوظيفية سيتم تزويدها من قبل الفريق
+                لتكون جاهزة مع بدء عمل المجلس الجديد.
+            </p>
+        </div>
+
+        <h2 class="section-title" style="margin-top:32px;font-size:1.4em;"><span class="icon">📅</span> الهيئات المسجلة</h2>
+        {% if bodies %}
+        <div class="program-grid">
+            {% for b in bodies %}
+            <div class="program-card">
+                <div class="icon">{% if b.body_type == 'council' %}🏛️{% else %}👥{% endif %}</div>
+                <h3>{{ b.name_ar }}</h3>
+                <p>{{ b.description_ar or 'لا يوجد وصف بعد' }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="card empty-state">لم يتم إضافة أي هيئات أو لجان بعد</div>
+        {% endif %}
+
+        <h2 class="section-title" style="margin-top:32px;font-size:1.4em;"><span class="icon">🗓️</span> الاجتماعات القادمة</h2>
+        {% if upcoming %}
+        <table class="table">
+            <thead><tr><th>التاريخ</th><th>الهيئة</th><th>العنوان</th><th>الحالة</th></tr></thead>
+            <tbody>
+            {% for m in upcoming %}
+            <tr>
+                <td>{{ m.scheduled_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>{{ m.body.name_ar }}</td>
+                <td>{{ m.title_ar }}</td>
+                <td>{{ m.status }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="card empty-state">لا توجد اجتماعات مجدولة</div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

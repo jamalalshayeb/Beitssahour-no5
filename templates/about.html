@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}عن القائمة — قائمة البناء والتنمية{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container narrow">
+        <div class="section-head reveal">
+            <div class="section-kicker">من نحن</div>
+            <h1>قائمة البناء والتنمية</h1>
+        </div>
+
+        <div class="card reveal">
+            <p style="font-size:var(--fs-18);line-height:2;color:var(--ink);">
+                <strong class="text-gold">قائمة البناء والتنمية</strong> هي قائمة انتخابية مستقلة تجمع ١٣ مرشحاً ومرشحة
+                من أبناء مدينة بيت ساحور، تضم خبرات هندسية ومالية ومصرفية وإدارية وقانونية وسياحية ومجتمعية.
+                هدفنا خدمة المدينة وتطوير البلدية بأسلوب حديث وشفاف.
+            </p>
+            <p style="margin-top:18px;line-height:2;color:var(--ink-muted);">
+                تسعى القائمة لبناء بلدية عصرية تعتمد على التخطيط الاستراتيجي، والحوكمة الرشيدة،
+                والتحول الرقمي، والشراكات الفاعلة، بما يعزز جودة الخدمات المقدمة للمواطن،
+                ويحافظ على الطابع التراثي والروحي لمدينة بيت ساحور.
+            </p>
+            <p style="margin-top:24px;color:var(--gold-2);font-size:var(--fs-20);font-weight:700;font-style:italic;text-align:center;">
+                "{{ site.slogan_ar if site and site.slogan_ar else 'بيت ساحور تستحق الأفضل — معاً نبني مستقبلنا' }}"
+            </p>
+        </div>
+
+        <div class="stats reveal mt-6">
+            <div class="stat"><b>13</b><span>مرشحاً ومرشحة</span></div>
+            <div class="stat"><b>{{ site.election_year if site else 2026 }}</b><span>انتخابات بلدية</span></div>
+            <div class="stat"><b>{{ site.list_number if site and site.list_number else 5 }}</b><span>رقم القائمة</span></div>
+        </div>
+    </div>
+</section>
+{% endblock %}

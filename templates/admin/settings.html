@@ -1,0 +1,52 @@
+{% extends "admin/_layout.html" %}
+{% block admin_title %}إعدادات الموقع{% endblock %}
+
+{% block admin_content %}
+<h1>⚙ إعدادات الموقع</h1>
+<div class="card">
+    <form method="post">
+
+        <h2 style="color:var(--gold-2);font-size:1.1em;margin-bottom:12px;">الانتخابات</h2>
+        <div class="form-grid-3">
+            <div class="form-row"><label>رقم القائمة</label><input type="text" name="list_number" value="{{ s.list_number or '5' }}"></div>
+            <div class="form-row"><label>سنة الانتخابات</label><input type="number" name="election_year" value="{{ s.election_year or 2026 }}"></div>
+            <div class="form-row"><label>تاريخ الانتخابات</label><input type="date" name="election_date" value="{{ s.election_date.isoformat() if s.election_date else '' }}"><div class="hint">يفعّل العد التنازلي في الصفحة الرئيسية.</div></div>
+        </div>
+        <div class="form-row"><label>مكان الاقتراع</label><input type="text" name="polling_location_ar" value="{{ s.polling_location_ar or '' }}"></div>
+
+        <h2 style="color:var(--gold-2);font-size:1.1em;margin:24px 0 12px;">الصفحة الرئيسية</h2>
+        <div class="form-row"><label>عنوان الواجهة (Hero headline)</label><input type="text" name="hero_headline_ar" value="{{ s.hero_headline_ar or '' }}"></div>
+        <div class="form-row"><label>وصف الواجهة (Hero subheadline)</label><textarea name="hero_subheadline_ar" rows="2">{{ s.hero_subheadline_ar or '' }}</textarea></div>
+        <div class="form-row"><label>مقدمة إضافية</label><textarea name="hero_intro_ar" rows="2">{{ s.hero_intro_ar or '' }}</textarea></div>
+
+        <h2 style="color:var(--gold-2);font-size:1.1em;margin:24px 0 12px;">الأرقام المميزة (تظهر في الصفحة الرئيسية)</h2>
+        {% for i in [1, 2, 3, 4] %}
+        <div class="form-grid">
+            <div class="form-row"><label>القيمة {{ i }}</label><input type="text" name="stat_{{ i }}_value" value="{{ s['stat_' + i|string + '_value'] or '' }}"></div>
+            <div class="form-row"><label>الوصف {{ i }}</label><input type="text" name="stat_{{ i }}_label" value="{{ s['stat_' + i|string + '_label'] or '' }}"></div>
+        </div>
+        {% endfor %}
+
+        <h2 style="color:var(--gold-2);font-size:1.1em;margin:24px 0 12px;">الشعار</h2>
+        <div class="form-row"><label>الشعار (عربي)</label><input type="text" name="slogan_ar" value="{{ s.slogan_ar or '' }}"></div>
+        <div class="form-row"><label>الشعار (إنجليزي)</label><input type="text" name="slogan_en" value="{{ s.slogan_en or '' }}"></div>
+
+        <h2 style="color:var(--gold-2);font-size:1.1em;margin:24px 0 12px;">التواصل</h2>
+        <div class="form-grid">
+            <div class="form-row"><label>هاتف</label><input type="text" name="contact_phone" value="{{ s.contact_phone or '' }}"></div>
+            <div class="form-row"><label>بريد إلكتروني</label><input type="email" name="contact_email" value="{{ s.contact_email or '' }}"></div>
+        </div>
+        <div class="form-row"><label>العنوان</label><input type="text" name="contact_address_ar" value="{{ s.contact_address_ar or '' }}"></div>
+
+        <h2 style="color:var(--gold-2);font-size:1.1em;margin:24px 0 12px;">روابط التواصل الاجتماعي</h2>
+        <div class="form-grid">
+            <div class="form-row"><label>Facebook</label><input type="url" name="facebook_url" value="{{ s.facebook_url or '' }}"></div>
+            <div class="form-row"><label>Instagram</label><input type="url" name="instagram_url" value="{{ s.instagram_url or '' }}"></div>
+            <div class="form-row"><label>TikTok</label><input type="url" name="tiktok_url" value="{{ s.tiktok_url or '' }}"></div>
+            <div class="form-row"><label>WhatsApp</label><input type="url" name="whatsapp_url" value="{{ s.whatsapp_url or '' }}"></div>
+        </div>
+
+        <p style="margin-top:18px;"><button type="submit" class="btn btn-primary">💾 حفظ الإعدادات</button></p>
+    </form>
+</div>
+{% endblock %}

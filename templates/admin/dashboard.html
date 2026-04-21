@@ -1,0 +1,51 @@
+{% extends "admin/_layout.html" %}
+{% block admin_title %}نظرة عامة{% endblock %}
+
+{% block admin_content %}
+<h1>📊 نظرة عامة</h1>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px;">
+    <div class="card" style="text-align:center;"><div style="font-size:2.4em;color:var(--gold);font-weight:800;">{{ counts.candidates }}</div><div>إجمالي المرشحين</div></div>
+    <div class="card" style="text-align:center;"><div style="font-size:2.4em;color:var(--gold);font-weight:800;">{{ counts.published }}</div><div>منشور</div></div>
+    <div class="card" style="text-align:center;"><div style="font-size:2.4em;color:var(--gold);font-weight:800;">{{ counts.priorities }}</div><div>أولوية</div></div>
+    <div class="card" style="text-align:center;"><div style="font-size:2.4em;color:var(--gold);font-weight:800;">{{ counts.program_sections }}</div><div>قسم برنامج</div></div>
+    <div class="card" style="text-align:center;"><div style="font-size:2.4em;color:var(--gold);font-weight:800;">{{ counts.faq }}</div><div>سؤال شائع</div></div>
+    <div class="card" style="text-align:center;">
+        <div style="font-size:2.4em;color:{% if counts.unread_messages %}#f59da6{% else %}var(--gold){% endif %};font-weight:800;">
+            {{ counts.unread_messages }} / {{ counts.messages }}
+        </div>
+        <div>رسائل غير مقروءة</div>
+    </div>
+</div>
+
+{% if latest_messages %}
+<div class="card">
+    <h2 style="color:var(--gold);font-size:1.25em;margin-bottom:12px;">✉ آخر الرسائل</h2>
+    <table class="table">
+        <thead><tr><th>الاسم</th><th>الاهتمام</th><th>جوال</th><th>التاريخ</th><th></th></tr></thead>
+        <tbody>
+            {% for m in latest_messages %}
+            <tr>
+                <td>{{ m.name }} {% if not m.is_read %}<span class="badge badge-head" style="margin-right:4px;">جديد</span>{% endif %}</td>
+                <td>{{ m.interest or '—' }}</td>
+                <td dir="ltr">{{ m.phone or '—' }}</td>
+                <td>{{ m.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td><a href="{{ url_for('admin.messages_list') }}" class="btn btn-sm">عرض</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<div class="card" style="margin-top:24px;">
+    <h2 style="color:var(--gold);font-size:1.25em;margin-bottom:12px;">⚡ إجراءات سريعة</h2>
+    <p>
+        <a class="btn" href="{{ url_for('admin.candidates_list') }}">إدارة المرشحين</a>
+        <a class="btn" href="{{ url_for('admin.priorities_list') }}">الأولويات</a>
+        <a class="btn" href="{{ url_for('admin.program_list') }}">البرنامج</a>
+        <a class="btn" href="{{ url_for('admin.faq_list') }}">الأسئلة الشائعة</a>
+        <a class="btn" href="{{ url_for('admin.settings') }}">إعدادات الموقع</a>
+    </p>
+</div>
+{% endblock %}

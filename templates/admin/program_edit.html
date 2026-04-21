@@ -1,0 +1,41 @@
+{% extends "admin/_layout.html" %}
+{% block admin_title %}تحرير قسم من البرنامج{% endblock %}
+
+{% block admin_content %}
+<h1>✏️ تحرير قسم من البرنامج</h1>
+<div class="card">
+    <form method="post">
+        <div class="form-grid">
+            <div class="form-row">
+                <label>الترتيب</label>
+                <input type="number" name="sort_order" value="{{ s.sort_order }}">
+            </div>
+            <div class="form-row">
+                <label>الأيقونة (emoji)</label>
+                <input type="text" name="icon" value="{{ s.icon or '' }}" maxlength="4">
+            </div>
+            <div class="form-row" style="grid-column:1/-1;">
+                <label>العنوان (عربي)</label>
+                <input type="text" name="title_ar" value="{{ s.title_ar }}" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <label>الملخص القصير (يظهر في بطاقات البرنامج)</label>
+            <textarea name="summary_ar" rows="3">{{ s.summary_ar or '' }}</textarea>
+        </div>
+        <div class="form-row">
+            <label>النص الكامل (HTML مسموح)</label>
+            <textarea name="body_ar" rows="10">{{ s.body_ar or '' }}</textarea>
+            <div class="hint">يظهر داخل قسم "اقرأ المزيد" على صفحة البرنامج.</div>
+        </div>
+        <div class="checkbox-row">
+            <input type="checkbox" name="is_published" id="pub" {% if s.is_published %}checked{% endif %}>
+            <label for="pub" style="margin:0;">منشور</label>
+        </div>
+        <p style="margin-top:16px;">
+            <button type="submit" class="btn btn-primary">💾 حفظ</button>
+            <a href="{{ url_for('admin.program_list') }}" class="btn">رجوع</a>
+        </p>
+    </form>
+</div>
+{% endblock %}

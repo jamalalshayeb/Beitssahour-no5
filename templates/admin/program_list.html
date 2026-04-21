@@ -1,0 +1,23 @@
+{% extends "admin/_layout.html" %}
+{% block admin_title %}البرنامج الانتخابي{% endblock %}
+
+{% block admin_content %}
+<h1>📋 البرنامج الانتخابي</h1>
+<table class="table">
+    <thead>
+        <tr><th>#</th><th>الأيقونة</th><th>العنوان</th><th>الحالة</th><th>تاريخ التحديث</th><th></th></tr>
+    </thead>
+    <tbody>
+        {% for s in sections %}
+        <tr>
+            <td>{{ s.sort_order }}</td>
+            <td style="font-size:1.4em;">{{ s.icon or '—' }}</td>
+            <td>{{ s.title_ar }}<div style="color:rgba(255,255,255,0.55);font-size:0.85em;">{{ s.summary_ar or '' }}</div></td>
+            <td>{% if s.is_published %}<span style="color:#8fe79b;">منشور</span>{% else %}<span style="color:#f2d98a;">مخفي</span>{% endif %}</td>
+            <td>{{ s.updated_at.strftime('%Y-%m-%d') }}</td>
+            <td><a href="{{ url_for('admin.program_edit', section_id=s.id) }}" class="btn btn-sm">تحرير</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

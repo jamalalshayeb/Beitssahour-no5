@@ -1,0 +1,30 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# venv (use the shared one in /opt/audit-jamal/venv or a local .venv)
+.venv/
+venv/
+
+# local-only
+.env
+.env.local
+
+# SQLite DB (seeded on boot — don't commit)
+data/site.db
+data/*.db-journal
+
+# Source campaign pictures (large originals). Processed versions in
+# static/uploads/photos/ are committed.
+pics/
+
+# Archived draft HTML
+index.reference.html
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

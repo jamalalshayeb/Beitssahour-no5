@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}البرنامج الانتخابي — قائمة البناء والتنمية{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="section-kicker">البرنامج الانتخابي</div>
+            <h1>ثماني ركائز لبلدية أفضل</h1>
+            <p>برنامج متكامل مبني على خبرة أعضاء القائمة في الإدارة المالية، الهندسة، التنمية المجتمعية، والخدمات العامة.</p>
+        </div>
+        {% if sections %}
+        <div class="program-grid">
+            {% for s in sections %}
+            <article class="program-card reveal">
+                {% if s.icon %}<div class="icon">{{ s.icon }}</div>{% endif %}
+                <h3>{{ s.title_ar }}</h3>
+                {% if s.summary_ar %}<p>{{ s.summary_ar }}</p>{% endif %}
+                {% if s.body_ar %}
+                <details style="margin-top:16px;">
+                    <summary style="cursor:pointer;color:var(--gold);font-weight:700;">اقرأ المزيد</summary>
+                    <div style="margin-top:10px;color:var(--ink-muted);line-height:1.9;">{{ s.body_ar|safe }}</div>
+                </details>
+                {% endif %}
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="card empty-state">البرنامج قيد التحضير</div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="cta">
+    <div class="cta-box reveal">
+        <h2>نحن جاهزون — هل أنتم جاهزون؟</h2>
+        <p>البرنامج مجرد وعد إن لم يصل إلى صندوق الاقتراع. صوتك هو ما يحوّل الخطط إلى قرارات.</p>
+        <div class="hero-cta-row" style="justify-content:center;">
+            <a href="{{ url_for('public.join') }}" class="btn btn-red">انضم إلى الحملة</a>
+            <a href="{{ url_for('public.candidates_list') }}" class="btn btn-ghost">تعرّف على المرشحين</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

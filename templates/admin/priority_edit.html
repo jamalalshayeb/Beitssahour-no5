@@ -1,0 +1,21 @@
+{% extends "admin/_layout.html" %}
+{% block admin_title %}تحرير أولوية{% endblock %}
+
+{% block admin_content %}
+<h1>✏️ تحرير أولوية</h1>
+<div class="card">
+    <form method="post">
+        <div class="form-grid">
+            <div class="form-row"><label>الترتيب</label><input type="number" name="sort_order" value="{{ p.sort_order }}"></div>
+            <div class="form-row"><label>الأيقونة (emoji)</label><input type="text" name="icon" value="{{ p.icon or '' }}" maxlength="4"></div>
+        </div>
+        <div class="form-row"><label>العنوان *</label><input type="text" name="title_ar" value="{{ p.title_ar }}" required></div>
+        <div class="form-row"><label>النص</label><textarea name="body_ar" rows="5">{{ p.body_ar or '' }}</textarea></div>
+        <div class="checkbox-row"><input type="checkbox" name="is_published" id="pub" {% if p.is_published %}checked{% endif %}><label for="pub" style="margin:0;">منشور</label></div>
+        <p style="margin-top:16px;">
+            <button type="submit" class="btn btn-primary">💾 حفظ</button>
+            <a href="{{ url_for('admin.priorities_list') }}" class="btn">رجوع</a>
+        </p>
+    </form>
+</div>
+{% endblock %}

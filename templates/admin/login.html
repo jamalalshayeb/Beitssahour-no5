@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}تسجيل الدخول — لوحة الإدارة{% endblock %}
+
+{% block content %}
+<section class="section" style="min-height:70vh;display:flex;align-items:center;">
+    <div class="container" style="max-width:420px;">
+        <div class="card">
+            <h1 class="section-title"><span class="icon">🔐</span> تسجيل دخول المدير</h1>
+            <form method="post">
+                <div class="form-row">
+                    <label>اسم المستخدم</label>
+                    <input type="text" name="username" required autofocus>
+                </div>
+                <div class="form-row">
+                    <label>كلمة المرور</label>
+                    <input type="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">دخول</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

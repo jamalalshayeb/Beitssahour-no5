@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}{{ c.display_name_ar }} — قائمة البناء والتنمية{% endblock %}
+{% block meta_description %}
+<meta name="description" content="{{ c.display_name_ar }}{% if c.tagline_ar %} — {{ c.tagline_ar }}{% endif %} | قائمة البناء والتنمية لبلدية بيت ساحور {{ site.election_year if site else 2026 }}">
+{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="candidate-hero card reveal">
+            <div class="photo-wrap {% if not c.photo_filename %}placeholder{% endif %}">
+                {% if c.photo_filename %}
+                    <img src="{{ url_for('static', filename='uploads/photos/' + c.photo_filename) }}" alt="{{ c.name_ar }}">
+                {% else %}👤{% endif %}
+            </div>
+            <div>
+                {% if c.is_head_of_list %}<div class="role" style="color:var(--gold-2);">⭐ رئيس القائمة</div>{% endif %}
+                {% if c.title_ar %}<div class="role">{{ c.title_ar }}</div>{% endif %}
+                <h1>{{ c.name_ar }}</h1>
+                {% if c.full_legal_name_ar %}<div class="legal">{{ c.full_legal_name_ar }}</div>{% endif %}
+                {% if c.name_en %}<div class="legal en">{{ c.name_en }}</div>{% endif %}
+                {% if c.tagline_ar %}<div style="margin-top:14px;"><span class="tag">{{ c.tagline_ar }}</span></div>{% endif %}
+                <div class="meta-pills">
+                    <span class="meta-pill">الترتيب #{{ c.position }}</span>
+                    <span class="meta-pill">قائمة رقم {{ site.list_number if site and site.list_number else 5 }}</span>
+                </div>
+            </div>
+        </div>
+
+        {% if c.bio_ar %}
+        <div class="card reveal mt-6">
+            <h2 style="color:var(--gold);font-size:var(--fs-24);margin-bottom:var(--s-4);">👤 نبذة</h2>
+            <p style="line-height:2;text-align:justify;color:var(--ink);">{{ c.bio_ar }}</p>
+        </div>
+        {% endif %}
+
+        {% if c.why_running_ar %}
+        <div class="card reveal mt-6">
+            <h2 style="color:var(--gold);font-size:var(--fs-24);margin-bottom:var(--s-4);">❓ لماذا أترشح</h2>
+            <p style="line-height:2;text-align:justify;color:var(--ink);">{{ c.why_running_ar }}</p>
+        </div>
+        {% endif %}
+
+        {% if cv %}
+        <div class="card reveal mt-6">
+            <h2 style="color:var(--gold);font-size:var(--fs-24);margin-bottom:var(--s-4);">📜 السيرة الذاتية</h2>
+            {% for cat in ['education', 'experience', 'memberships', 'community', 'awards', 'skills', 'other'] %}
+                {% set items = cv.get(cat) %}
+                {% if items %}
+                <div class="cv-category">
+                    <h3>{{ cv_icon.get(cat, '•') }} {{ cv_label_ar.get(cat, cat) }}</h3>
+                    <ul class="cv-list">
+                        {% for item in items %}<li>{{ item.text_ar }}</li>{% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% elif not c.bio_ar %}
+        <div class="card empty-state mt-6">السيرة الذاتية قيد التحضير</div>
+        {% endif %}
+
+        {% if promises %}
+        <div class="card reveal mt-6">
+            <h2 style="color:var(--gold);font-size:var(--fs-24);margin-bottom:var(--s-4);">🎯 ماذا أقدم لبيت ساحور</h2>
+            <div class="promises-grid">
+                {% for p in promises %}
+                <div class="promise-item">
+                    {% if p.icon %}<div class="promise-icon">{{ p.icon }}</div>{% endif %}
+                    <div class="promise-text">{{ p.text_ar }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <p class="text-center mt-6">
+            <a href="{{ url_for('public.candidates_list') }}" class="btn btn-ghost">→ كل المرشحين</a>
+            <a href="{{ url_for('public.join') }}" class="btn btn-primary">انضم إلى الحملة</a>
+        </p>
+    </div>
+</section>
+{% endblock %}
