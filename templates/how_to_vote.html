@@ -41,22 +41,42 @@
             </p>
             <div class="howto-gallery">
                 <figure class="howto-figure">
-                    <img src="{{ url_for('static', filename='img/howto-01.jpg') }}"
-                         alt="آلية التصويت — الخطوة الأولى"
-                         loading="lazy">
+                    <a href="{{ url_for('static', filename='img/howto-01.jpg') }}"
+                       class="howto-zoom" data-caption="الخطوة الأولى">
+                        <img src="{{ url_for('static', filename='img/howto-01.jpg') }}"
+                             alt="آلية التصويت — الخطوة الأولى"
+                             loading="lazy">
+                    </a>
                     <figcaption>الخطوة الأولى</figcaption>
                 </figure>
                 <figure class="howto-figure">
-                    <img src="{{ url_for('static', filename='img/howto-02.jpg') }}"
-                         alt="آلية التصويت — الخطوة الثانية"
-                         loading="lazy">
+                    <a href="{{ url_for('static', filename='img/howto-02.jpg') }}"
+                       class="howto-zoom" data-caption="الخطوة الثانية">
+                        <img src="{{ url_for('static', filename='img/howto-02.jpg') }}"
+                             alt="آلية التصويت — الخطوة الثانية"
+                             loading="lazy">
+                    </a>
                     <figcaption>الخطوة الثانية</figcaption>
                 </figure>
                 <figure class="howto-figure">
-                    <img src="{{ url_for('static', filename='img/howto-03.jpg') }}"
-                         alt="آلية التصويت — الخطوة الثالثة"
-                         loading="lazy">
+                    <a href="{{ url_for('static', filename='img/howto-03.jpg') }}"
+                       class="howto-zoom" data-caption="الخطوة الثالثة">
+                        <img src="{{ url_for('static', filename='img/howto-03.jpg') }}"
+                             alt="آلية التصويت — الخطوة الثالثة"
+                             loading="lazy">
+                    </a>
                     <figcaption>الخطوة الثالثة</figcaption>
+                </figure>
+            </div>
+
+            {# Lightbox overlay #}
+            <div id="howtoLightbox" class="howto-lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+                <button type="button" class="howto-lb-close" aria-label="إغلاق">✕</button>
+                <button type="button" class="howto-lb-prev" aria-label="السابق">‹</button>
+                <button type="button" class="howto-lb-next" aria-label="التالي">›</button>
+                <figure class="howto-lb-figure">
+                    <img class="howto-lb-img" src="" alt="">
+                    <figcaption class="howto-lb-caption"></figcaption>
                 </figure>
             </div>
         </div>
@@ -151,16 +171,56 @@
 }
 @media (max-width: 720px) { .howto-gallery { grid-template-columns: 1fr; } }
 .howto-figure { margin: 0; text-align: center; }
+.howto-zoom { display: block; cursor: zoom-in; }
 .howto-figure img {
     display: block; width: 100%; height: auto;
     border-radius: var(--r-md); border: 1px solid var(--gold-line);
     box-shadow: var(--shadow); background: #fff;
-    cursor: zoom-in; transition: transform var(--dur-fast) var(--ease);
+    transition: transform var(--dur-fast) var(--ease);
 }
-.howto-figure img:hover { transform: scale(1.02); }
+.howto-zoom:hover img { transform: scale(1.02); }
 .howto-figure figcaption {
     margin-top: var(--s-2); color: var(--gold);
     font-family: var(--font-ar); font-weight: 700; font-size: var(--fs-14);
+}
+
+/* Lightbox */
+.howto-lightbox {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,0.92);
+    display: none; align-items: center; justify-content: center;
+    padding: var(--s-4);
+}
+.howto-lightbox.open { display: flex; }
+.howto-lb-figure { margin: 0; max-width: 95vw; max-height: 90vh; text-align: center; }
+.howto-lb-img {
+    display: block; max-width: 100%; max-height: 85vh;
+    margin: 0 auto; border-radius: var(--r-md);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5); background: #fff;
+}
+.howto-lb-caption {
+    margin-top: var(--s-3); color: var(--gold);
+    font-family: var(--font-ar); font-weight: 700; font-size: var(--fs-18);
+}
+.howto-lb-close, .howto-lb-prev, .howto-lb-next {
+    position: absolute; background: rgba(200,162,78,0.15);
+    color: var(--gold); border: 1px solid var(--gold-line);
+    width: 52px; height: 52px; border-radius: 50%;
+    font-size: 28px; font-weight: 700; cursor: pointer;
+    display: grid; place-items: center;
+    transition: background var(--dur-fast) var(--ease);
+}
+.howto-lb-close:hover, .howto-lb-prev:hover, .howto-lb-next:hover {
+    background: rgba(200,162,78,0.35);
+}
+.howto-lb-close { top: 20px; inset-inline-end: 20px; }
+.howto-lb-prev { top: 50%; transform: translateY(-50%); inset-inline-end: 20px; }
+.howto-lb-next { top: 50%; transform: translateY(-50%); inset-inline-start: 20px; }
+@media (max-width: 520px) {
+    .howto-lb-close, .howto-lb-prev, .howto-lb-next { width: 44px; height: 44px; font-size: 22px; }
+    .howto-lb-close { top: 12px; inset-inline-end: 12px; }
+    .howto-lb-prev { inset-inline-end: 8px; }
+    .howto-lb-next { inset-inline-start: 8px; }
 }
 
 .ballot-list { list-style: none; display: grid; gap: var(--s-2); counter-reset: ballot; }
@@ -184,4 +244,54 @@
     .ballot-link { grid-column: 1 / -1; text-align: end; }
 }
 </style>
+
+<script>
+(function() {
+    var lb = document.getElementById('howtoLightbox');
+    if (!lb) return;
+    var img = lb.querySelector('.howto-lb-img');
+    var cap = lb.querySelector('.howto-lb-caption');
+    var btnClose = lb.querySelector('.howto-lb-close');
+    var btnPrev = lb.querySelector('.howto-lb-prev');
+    var btnNext = lb.querySelector('.howto-lb-next');
+    var links = Array.prototype.slice.call(document.querySelectorAll('.howto-zoom'));
+    var idx = 0;
+
+    function show(i) {
+        idx = (i + links.length) % links.length;
+        var a = links[idx];
+        img.src = a.getAttribute('href');
+        img.alt = a.querySelector('img').alt || '';
+        cap.textContent = a.getAttribute('data-caption') || '';
+    }
+    function open(i) {
+        show(i);
+        lb.classList.add('open');
+        lb.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+    function close() {
+        lb.classList.remove('open');
+        lb.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    links.forEach(function(a, i) {
+        a.addEventListener('click', function(e) {
+            e.preventDefault();
+            open(i);
+        });
+    });
+    btnClose.addEventListener('click', close);
+    btnPrev.addEventListener('click', function(e) { e.stopPropagation(); show(idx - 1); });
+    btnNext.addEventListener('click', function(e) { e.stopPropagation(); show(idx + 1); });
+    lb.addEventListener('click', function(e) { if (e.target === lb) close(); });
+    document.addEventListener('keydown', function(e) {
+        if (!lb.classList.contains('open')) return;
+        if (e.key === 'Escape') close();
+        else if (e.key === 'ArrowLeft') show(idx - 1);
+        else if (e.key === 'ArrowRight') show(idx + 1);
+    });
+})();
+</script>
 {% endblock %}
