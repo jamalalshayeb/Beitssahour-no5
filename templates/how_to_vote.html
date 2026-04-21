@@ -29,8 +29,36 @@
                 <p>في الجزء السفلي من ورقة الاقتراع، ضع علامة (✓) أمام أسماء المرشحين الذين تريد دعمهم شخصياً —
                    <strong>بحد أقصى 5 مرشحين من أعضاء قائمة البناء والتنمية</strong>. يمكنك اختيار عدد أقل،
                    لكن لا تتجاوز الخمسة.</p>
-                <div class="vote-warn">⚠ اختيار أكثر من 5 مرشحين يُلغي الأصوات التفضيلية (ويبقى صوت القائمة محتسباً).</div>
+                <div class="vote-warn">⚠ اختيار أكثر من 5 مرشحين يُلغي البطاقة بالكامل.</div>
             </article>
+        </div>
+
+        {# Visual guide — illustrated steps #}
+        <div class="card reveal mt-6">
+            <h2 style="color:var(--gold);font-size:var(--fs-24);margin-bottom:var(--s-4);text-align:center;">صور توضيحية — آلية التصويت</h2>
+            <p style="text-align:center;color:var(--ink-muted);margin-bottom:var(--s-5);">
+                تابع الخطوات مصوّرةً لتعرف تماماً كيف تضع العلامة على ورقة الاقتراع.
+            </p>
+            <div class="howto-gallery">
+                <figure class="howto-figure">
+                    <img src="{{ url_for('static', filename='img/howto-01.jpg') }}"
+                         alt="آلية التصويت — الخطوة الأولى"
+                         loading="lazy">
+                    <figcaption>الخطوة الأولى</figcaption>
+                </figure>
+                <figure class="howto-figure">
+                    <img src="{{ url_for('static', filename='img/howto-02.jpg') }}"
+                         alt="آلية التصويت — الخطوة الثانية"
+                         loading="lazy">
+                    <figcaption>الخطوة الثانية</figcaption>
+                </figure>
+                <figure class="howto-figure">
+                    <img src="{{ url_for('static', filename='img/howto-03.jpg') }}"
+                         alt="آلية التصويت — الخطوة الثالثة"
+                         loading="lazy">
+                    <figcaption>الخطوة الثالثة</figcaption>
+                </figure>
+            </div>
         </div>
 
         {# The actual ballot #}
@@ -116,6 +144,23 @@
     margin-top: var(--s-4); padding: var(--s-3);
     background: rgba(206,17,38,0.10); border: 1px solid rgba(206,17,38,0.35);
     border-radius: var(--r-sm); color: #f59da6; font-size: var(--fs-14); font-weight: 600;
+}
+
+.howto-gallery {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4);
+}
+@media (max-width: 720px) { .howto-gallery { grid-template-columns: 1fr; } }
+.howto-figure { margin: 0; text-align: center; }
+.howto-figure img {
+    display: block; width: 100%; height: auto;
+    border-radius: var(--r-md); border: 1px solid var(--gold-line);
+    box-shadow: var(--shadow); background: #fff;
+    cursor: zoom-in; transition: transform var(--dur-fast) var(--ease);
+}
+.howto-figure img:hover { transform: scale(1.02); }
+.howto-figure figcaption {
+    margin-top: var(--s-2); color: var(--gold);
+    font-family: var(--font-ar); font-weight: 700; font-size: var(--fs-14);
 }
 
 .ballot-list { list-style: none; display: grid; gap: var(--s-2); counter-reset: ballot; }
