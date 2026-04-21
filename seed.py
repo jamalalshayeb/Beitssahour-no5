@@ -15,11 +15,19 @@ from models import (
 )
 
 
+FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61576443877959'
+
+
 def seed_settings():
-    if SiteSettings.query.first():
-        return
-    db.session.add(SiteSettings())
-    db.session.commit()
+    s = SiteSettings.query.first()
+    if s is None:
+        s = SiteSettings(facebook_url=FACEBOOK_URL)
+        db.session.add(s)
+        db.session.commit()
+    elif not s.facebook_url:
+        # Backfill for instances seeded before the FB URL was known — admin edits still win.
+        s.facebook_url = FACEBOOK_URL
+        db.session.commit()
 
 
 def seed_admin():
