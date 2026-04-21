@@ -47,6 +47,7 @@ CANDIDATES = [
         'position': 1,
         'title_ar': 'المهندس',
         'name_ar': 'رائد نصري الأطرش',
+        'full_legal_name_ar': 'رائد نصري باسيل الاطرش',
         'name_en': 'Raed Nasri Al-Atrash',
         'tagline_ar': 'رئيس قائمة البناء والتنمية',
         'photo_filename': 'raed-atrash.jpg',
@@ -83,8 +84,9 @@ CANDIDATES = [
     },
     {
         'position': 2,
-        'name_ar': 'كريم شعيبات',
-        'name_en': 'Karim Shuaibat',
+        'name_ar': 'كريم الشعبيات',
+        'full_legal_name_ar': 'كريم محمد علي الشعبيات',
+        'name_en': 'Kareem Al-Shuaibat',
         'tagline_ar': 'إدارة الأعمال الحرة والمقاولات',
         'photo_filename': 'kareem-sheebat.jpg',
         'cv': [
@@ -101,8 +103,9 @@ CANDIDATES = [
     },
     {
         'position': 3,
-        'name_ar': 'ريتا أبو الزلف شوملي',
-        'name_en': 'Rita Abu Al-Zulof Shomali',
+        'name_ar': 'ريتا شوملي',
+        'full_legal_name_ar': 'ريتا بشاره جريس شوملي',
+        'name_en': 'Rita Shomali',
         'tagline_ar': '29 عاماً خبرة مصرفية — مديرة بنك',
         'photo_filename': 'rita-shomaly.jpg',
         'bio_ar': (
@@ -131,9 +134,10 @@ CANDIDATES = [
         ],
     },
     {
-        'position': 4,
-        'name_ar': 'لينا القزحة غانم',
-        'name_en': 'Lina Al-Qazha Ghanem',
+        'position': 5,
+        'name_ar': 'لينا القزحة',
+        'full_legal_name_ar': 'لينا جمال عيسى القزحه',
+        'name_en': 'Lina Al-Qazha',
         'tagline_ar': 'السياحة والتأهيل والعمل المجتمعي',
         'photo_filename': 'lina-qazaha.jpg',
         'cv': [
@@ -146,10 +150,10 @@ CANDIDATES = [
         ],
     },
     {
-        'position': 5,
+        'position': 6,
         'title_ar': 'المحاسب القانوني',
         'name_ar': 'جمال الشايب',
-        'full_legal_name_ar': 'جمال عيسى غريغوري أبوفرحة - الشايب',
+        'full_legal_name_ar': 'جمال عيسى غريغوري ابو فرحه',
         'name_en': 'Jamal Issa Gregory AbuFarha - AlShayeb',
         'tagline_ar': 'خبرة تمتد لأكثر من 15 عاماً في التدقيق والاستشارات المالية والإدارية',
         'photo_filename': 'jamal-shayeb.jpg',
@@ -191,8 +195,9 @@ CANDIDATES = [
         ],
     },
     {
-        'position': 6,
+        'position': 10,
         'name_ar': 'مجدي الأطرش',
+        'full_legal_name_ar': 'مجدي فؤاد باسيل الاطرش',
         'name_en': 'Majdi Al-Atrash',
         'tagline_ar': 'معلم تربية رياضية ومدرب',
         'photo_filename': 'majdi-atrash.jpg',
@@ -207,8 +212,9 @@ CANDIDATES = [
         ],
     },
     {
-        'position': 7,
+        'position': 13,
         'name_ar': 'بشار الهواش',
+        'full_legal_name_ar': 'بشار منجد عيسى الهواش',
         'name_en': 'Bashar Al-Hawash',
         'tagline_ar': 'هندسة ميكانيكية وتعهدات — مؤسس شركة BMH',
         'photo_filename': 'bashar-hawash.jpg',
@@ -223,9 +229,10 @@ CANDIDATES = [
         ],
     },
     {
-        'position': 8,
+        'position': 4,
         'title_ar': 'المهندس',
         'name_ar': 'منجد الهواش',
+        'full_legal_name_ar': 'منجد عيسى جادالله الهواش',
         'name_en': 'Munjed Al-Hawash',
         'tagline_ar': 'هندسة ميكانيكية وتحكيم دولي — نائب رئيس بلدية سابق',
         'photo_filename': 'munjed-hawash.jpg',
@@ -256,8 +263,9 @@ CANDIDATES = [
         ],
     },
     {
-        'position': 9,
+        'position': 8,
         'name_ar': 'الياس عواد',
+        'full_legal_name_ar': 'الياس جورج نيقولا عواد',
         'name_en': 'Elias Awwad',
         'tagline_ar': 'تأمين ومحاسبة — خبرة تزيد عن 12 عاماً',
         'photo_filename': 'elias-awwad.jpg',
@@ -272,8 +280,9 @@ CANDIDATES = [
         ],
     },
     {
-        'position': 10,
+        'position': 11,
         'name_ar': 'رامز عوض',
+        'full_legal_name_ar': 'رامز شوقي فرح عوض',
         'name_en': 'Ramez Awad',
         'tagline_ar': 'السياحة وإدارة الأعمال',
         'photo_filename': 'ramiz-awad.jpg',
@@ -288,8 +297,9 @@ CANDIDATES = [
         ],
     },
     {
-        'position': 11,
+        'position': 12,
         'name_ar': 'يعقوب اليتيم',
+        'full_legal_name_ar': 'يعقوب اياد يعقوب اليتيم',
         'name_en': 'Jacob Yatim',
         'tagline_ar': 'السياحة والعمل المجتمعي',
         'photo_filename': 'jacob-yatim.jpg',
@@ -304,9 +314,10 @@ CANDIDATES = [
         ],
     },
     {
-        'position': 12,
+        'position': 9,
         'title_ar': 'المهندسة',
         'name_ar': 'جيانا الأطرش',
+        'full_legal_name_ar': 'جيانا رائد نصري الاطرش',
         'name_en': 'Jiana Al-Atrash',
         'tagline_ar': 'هندسة كهربائية — شبكات اتصالات وطاقة متجددة',
         'photo_filename': 'jiana-atrash.jpg',
@@ -323,9 +334,10 @@ CANDIDATES = [
         ],
     },
     {
-        'position': 13,
+        'position': 7,
         'title_ar': 'المهندسة',
         'name_ar': 'جوان الأطرش',
+        'full_legal_name_ar': 'جوان رائد نصري الاطرش',
         'name_en': 'Jwan Al-Atrash',
         'tagline_ar': 'هندسة مدنية — إدارة وتنفيذ مشاريع',
         'photo_filename': 'jwan-atrash.jpg',
@@ -446,6 +458,10 @@ FAQ = [
     ('كيف يمكنني دعم الحملة؟',
      'عبر صفحة "انضم إلينا" يمكنك التسجيل للتطوع، طلب تذكير بموعد الانتخابات، أو ببساطة مشاركة الموقع مع الأهل والأصدقاء. '
      'كل صوت يحتسب، وكل مشاركة تصنع فرقاً.'),
+    ('كيف أصوّت لقائمة البناء والتنمية؟',
+     'الخطوة الأولى: ضع علامة (✓) أمام قائمة "البناء والتنمية — رقم 5" في أعلى ورقة الاقتراع. '
+     'الخطوة الثانية: ضع علامة (✓) أمام حتى 5 مرشحين من القائمة كأصوات تفضيلية شخصية. '
+     'راجع صفحة "كيف أصوّت" للحصول على الشرح الكامل بالصور.'),
     ('كيف أتأكد من مكان تصويتي؟',
      'يمكنك مراجعة سجل الناخبين النهائي عبر لجنة الانتخابات المركزية الفلسطينية أو التواصل معنا مباشرة. '
      'سننشر تفاصيل مراكز الاقتراع قبل يوم الانتخابات.'),

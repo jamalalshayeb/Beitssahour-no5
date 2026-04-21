@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block title %}كيف أصوّت — قائمة البناء والتنمية رقم 5{% endblock %}
+{% block meta_description %}
+<meta name="description" content="دليل التصويت لقائمة البناء والتنمية (رقم 5) في انتخابات بلدية بيت ساحور {{ site.election_year if site else 2026 }} — علامة أمام القائمة رقم 5 واختيار 5 مرشحين من القائمة.">
+{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container narrow">
+        <div class="section-head reveal">
+            <div class="section-kicker">دليل التصويت</div>
+            <h1>كيف أصوّت لقائمة البناء والتنمية</h1>
+            <p>خطوتان فقط — دقيقتان أمام صندوق الاقتراع. اتبع الخطوات أدناه ليكون صوتك صحيحاً ومحتسباً.</p>
+        </div>
+
+        {# Two-step visual guide #}
+        <div class="vote-steps reveal">
+            <article class="vote-step">
+                <div class="vote-step-num">1</div>
+                <h3>ضع علامة (✓) أمام قائمة رقم <span class="big-5">5</span></h3>
+                <p>في أعلى ورقة الاقتراع، ستجد قائمة "<strong class="text-gold">البناء والتنمية</strong>" ويظهر بجانبها الرقم <strong>5</strong>.
+                   ضع علامة (✓) في المربع المخصص لها — <strong>قائمة واحدة فقط</strong>.</p>
+                <div class="vote-warn">⚠ اختيار أكثر من قائمة يُلغي صوتك بالكامل.</div>
+            </article>
+
+            <article class="vote-step">
+                <div class="vote-step-num">2</div>
+                <h3>اختر حتى <span class="big-5">5</span> مرشحين من داخل القائمة</h3>
+                <p>في الجزء السفلي من ورقة الاقتراع، ضع علامة (✓) أمام أسماء المرشحين الذين تريد دعمهم شخصياً —
+                   <strong>بحد أقصى 5 مرشحين من أعضاء قائمة البناء والتنمية</strong>. يمكنك اختيار عدد أقل،
+                   لكن لا تتجاوز الخمسة.</p>
+                <div class="vote-warn">⚠ اختيار أكثر من 5 مرشحين يُلغي الأصوات التفضيلية (ويبقى صوت القائمة محتسباً).</div>
+            </article>
+        </div>
+
+        {# The actual ballot #}
+        <div class="card reveal mt-6">
+            <h2 style="color:var(--gold);font-size:var(--fs-24);margin-bottom:var(--s-4);text-align:center;">نموذج ورقة الاقتراع</h2>
+            <p style="text-align:center;color:var(--ink-muted);margin-bottom:var(--s-5);">
+                هذا هو الشكل الفعلي لورقة الاقتراع — احفظ الرقم <strong class="text-gold">5</strong> والأسماء قبل الذهاب للتصويت.
+            </p>
+            <img src="{{ url_for('static', filename='img/ballot.jpg') }}"
+                 alt="نموذج ورقة الاقتراع — قائمة البناء والتنمية رقم 5"
+                 style="display:block;max-width:100%;margin:0 auto;border-radius:var(--r-md);border:1px solid var(--gold-line);box-shadow:var(--shadow);">
+        </div>
+
+        {# Official ballot order — 13 candidates #}
+        <div class="card reveal mt-6">
+            <h2 style="color:var(--gold);font-size:var(--fs-24);margin-bottom:var(--s-4);text-align:center;">المرشحون بالترتيب الرسمي على ورقة الاقتراع</h2>
+            <ol class="ballot-list">
+                {% for c in candidates %}
+                <li>
+                    <span class="ballot-num">{{ c.position }}</span>
+                    <span class="ballot-name">{{ c.full_legal_name_ar or c.display_name_ar }}</span>
+                    <a href="{{ url_for('public.candidate_detail', candidate_id=c.id) }}" class="ballot-link">السيرة ←</a>
+                </li>
+                {% endfor %}
+            </ol>
+        </div>
+
+        {# Tips #}
+        <div class="card reveal mt-6">
+            <h2 style="color:var(--gold);font-size:var(--fs-24);margin-bottom:var(--s-4);">نصائح عملية</h2>
+            <ul class="cv-list">
+                <li>📱 احفظ صورة من هذه الصفحة في هاتفك قبل الذهاب إلى مركز الاقتراع.</li>
+                <li>🆔 اصطحب بطاقة الهوية الشخصية.</li>
+                <li>🕘 مراكز الاقتراع تفتح صباحاً — اذهب باكراً لتجنّب الازدحام.</li>
+                <li>🖊 استخدم القلم المتوفر في مركز الاقتراع فقط — لا تستخدم قلمك الخاص.</li>
+                <li>❌ لا تضع أي إشارات أو كتابات إضافية على ورقة الاقتراع — سيُعتبر صوتك باطلاً.</li>
+                {% if site and site.polling_location_ar %}
+                <li>📍 مركز اقتراعك: <strong>{{ site.polling_location_ar }}</strong></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="cta-box reveal">
+        <div class="hero-eyebrow"><span class="pulse"></span> يوم الانتخابات قريب</div>
+        <h2>صوّت <span style="color:#fff;background:var(--red);padding:4px 18px;border-radius:var(--r-sm);font-weight:900;">5</span> — قائمة البناء والتنمية</h2>
+        <p>صوتك الصحيح هو الفرق بين الكلام والتنفيذ. شارك هذه الصفحة مع عائلتك وأصدقائك.</p>
+        <div class="hero-cta-row" style="justify-content:center;">
+            <a href="{{ url_for('public.candidates_list') }}" class="btn btn-ghost">المرشحون</a>
+            <a href="{{ url_for('public.join') }}" class="btn btn-red">انضم إلى الحملة</a>
+        </div>
+    </div>
+</section>
+
+<style>
+.vote-steps {
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); margin-top: var(--s-6);
+}
+@media (max-width: 720px) { .vote-steps { grid-template-columns: 1fr; } }
+.vote-step {
+    background: linear-gradient(145deg, var(--surface-2), var(--surface-1));
+    border: 1px solid var(--gold-line); border-radius: var(--r-lg);
+    padding: var(--s-6); position: relative;
+}
+.vote-step-num {
+    position: absolute; top: -18px; inset-inline-start: var(--s-5);
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-2));
+    color: var(--deep-2); font-family: var(--font-ar); font-weight: 900;
+    font-size: var(--fs-20); display: grid; place-items: center;
+    box-shadow: var(--shadow-gold);
+}
+.vote-step h3 { color: var(--gold); font-size: var(--fs-20); margin-bottom: var(--s-3); margin-top: var(--s-2); }
+.vote-step p { color: var(--ink); line-height: 1.9; }
+.vote-step .big-5 {
+    display: inline-block; padding: 0 10px; margin: 0 4px;
+    background: var(--red); color: #fff; border-radius: var(--r-sm);
+    font-family: var(--font-ar); font-weight: 900;
+}
+.vote-warn {
+    margin-top: var(--s-4); padding: var(--s-3);
+    background: rgba(206,17,38,0.10); border: 1px solid rgba(206,17,38,0.35);
+    border-radius: var(--r-sm); color: #f59da6; font-size: var(--fs-14); font-weight: 600;
+}
+
+.ballot-list { list-style: none; display: grid; gap: var(--s-2); counter-reset: ballot; }
+.ballot-list li {
+    display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: var(--s-3);
+    padding: var(--s-3) var(--s-4);
+    background: rgba(200,162,78,0.05); border-radius: var(--r-md);
+    border-right: 3px solid var(--gold);
+    transition: all var(--dur-fast) var(--ease);
+}
+.ballot-list li:hover { background: rgba(200,162,78,0.10); }
+.ballot-num {
+    display: grid; place-items: center; width: 40px; height: 40px;
+    background: var(--gold-soft); border: 1px solid var(--gold-line); border-radius: 50%;
+    color: var(--gold); font-weight: 800; font-family: var(--font-ar);
+}
+.ballot-name { color: var(--ink); font-weight: 600; font-size: var(--fs-16); }
+.ballot-link { color: var(--gold); font-size: var(--fs-14); font-weight: 600; white-space: nowrap; }
+@media (max-width: 520px) {
+    .ballot-list li { grid-template-columns: 40px 1fr; }
+    .ballot-link { grid-column: 1 / -1; text-align: end; }
+}
+</style>
+{% endblock %}

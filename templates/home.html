@@ -11,8 +11,9 @@
     <p class="sub">{{ site.hero_subheadline_ar if site and site.hero_subheadline_ar else 'قائمة تجمع الخبرات الهندسية والمالية والإدارية والمجتمعية لخدمة مدينة تستحق الأفضل.' }}</p>
 
     <div class="hero-cta-row">
-        <a href="{{ url_for('public.candidates_list') }}" class="btn btn-primary">تعرّف على المرشحين ←</a>
-        <a href="{{ url_for('public.program') }}" class="btn btn-ghost">اقرأ البرنامج</a>
+        <a href="{{ url_for('public.how_to_vote') }}" class="btn btn-red">كيف أصوّت لقائمة رقم 5 ←</a>
+        <a href="{{ url_for('public.candidates_list') }}" class="btn btn-primary">تعرّف على المرشحين</a>
+        <a href="{{ url_for('public.program') }}" class="btn btn-ghost">البرنامج</a>
     </div>
 
     {% if site and site.election_date %}
@@ -41,6 +42,36 @@
                 <span>{{ s.label }}</span>
             </div>
             {% endfor %}
+        </div>
+    </div>
+</section>
+
+{# ---------- HOW TO VOTE (teaser) ---------- #}
+<section class="section">
+    <div class="container">
+        <div class="card reveal" style="display:grid;grid-template-columns:1.4fr 1fr;gap:var(--s-6);align-items:center;padding:var(--s-7);">
+            <div>
+                <div class="section-kicker">كيف أصوّت</div>
+                <h2 style="margin-bottom:var(--s-3);">صوتك الصحيح في خطوتين</h2>
+                <ol style="list-style:none;display:grid;gap:var(--s-3);margin:var(--s-4) 0;">
+                    <li style="display:flex;gap:var(--s-3);align-items:flex-start;">
+                        <span style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-2));color:var(--deep-2);display:grid;place-items:center;font-family:var(--font-ar);font-weight:900;">1</span>
+                        <span style="color:var(--ink);font-size:var(--fs-16);line-height:1.8;">ضع علامة (✓) أمام <strong class="text-gold">قائمة البناء والتنمية — رقم 5</strong></span>
+                    </li>
+                    <li style="display:flex;gap:var(--s-3);align-items:flex-start;">
+                        <span style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-2));color:var(--deep-2);display:grid;place-items:center;font-family:var(--font-ar);font-weight:900;">2</span>
+                        <span style="color:var(--ink);font-size:var(--fs-16);line-height:1.8;">اختر حتى <strong class="text-gold">5 مرشحين</strong> من القائمة كأصوات تفضيلية</span>
+                    </li>
+                </ol>
+                <p><a href="{{ url_for('public.how_to_vote') }}" class="btn btn-red">دليل التصويت الكامل ←</a></p>
+            </div>
+            <div>
+                <a href="{{ url_for('public.how_to_vote') }}">
+                    <img src="{{ url_for('static', filename='img/ballot.jpg') }}"
+                         alt="نموذج ورقة الاقتراع — قائمة رقم 5"
+                         style="width:100%;border-radius:var(--r-md);border:1px solid var(--gold-line);box-shadow:var(--shadow);">
+                </a>
+            </div>
         </div>
     </div>
 </section>

@@ -70,6 +70,7 @@
                 <li><a href="{{ url_for('public.candidates_list') }}" {% if 'candidate' in ep %}class="active"{% endif %}>المرشحون</a></li>
                 <li><a href="{{ url_for('public.priorities') }}" {% if ep == 'public.priorities' %}class="active"{% endif %}>أولوياتنا</a></li>
                 <li><a href="{{ url_for('public.program') }}" {% if ep == 'public.program' %}class="active"{% endif %}>البرنامج</a></li>
+                <li><a href="{{ url_for('public.how_to_vote') }}" {% if ep == 'public.how_to_vote' %}class="active"{% endif %}>كيف أصوّت</a></li>
                 <li><a href="{{ url_for('public.faq') }}" {% if ep == 'public.faq' %}class="active"{% endif %}>أسئلة شائعة</a></li>
                 <li><a href="{{ url_for('public.about') }}" {% if ep == 'public.about' %}class="active"{% endif %}>عن القائمة</a></li>
             </ul>

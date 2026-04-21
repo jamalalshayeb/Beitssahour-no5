@@ -115,6 +115,15 @@ def about():
     return render_template('about.html')
 
 
+@public_bp.route('/how-to-vote')
+def how_to_vote():
+    candidates = (Candidate.query
+                  .filter_by(is_published=True)
+                  .order_by(Candidate.position.asc())
+                  .all())
+    return render_template('how_to_vote.html', candidates=candidates)
+
+
 @public_bp.route('/join', methods=['GET', 'POST'])
 def join():
     if request.method == 'POST':
@@ -145,6 +154,7 @@ def sitemap():
         url_for('public.program', _external=True),
         url_for('public.faq', _external=True),
         url_for('public.about', _external=True),
+        url_for('public.how_to_vote', _external=True),
         url_for('public.join', _external=True),
     ]
     for c in Candidate.query.filter_by(is_published=True).all():
