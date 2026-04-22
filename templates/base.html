@@ -133,9 +133,13 @@
         <div class="footer-bottom">
             <small>© {{ site.election_year if site else 2026 }} قائمة البناء والتنمية — جميع الحقوق محفوظة</small>
             <small class="credit">
-                تصميم وتنفيذ
-                <a href="https://www.alshayebco.com" target="_blank" rel="noopener">AlShayeb Partners</a>
-                · <a href="mailto:jamal@alshayebco.com">jamal@alshayebco.com</a>
+                <span>تصميم وتنفيذ</span>
+                <a href="https://www.alshayebco.com" target="_blank" rel="noopener" class="credit-brand">
+                    <img src="{{ url_for('static', filename='img/alshayeb-logo.png') }}"
+                         alt="AlShayeb Partners" class="credit-logo">
+                </a>
+                <span class="credit-sep">·</span>
+                <a href="mailto:jamal@alshayebco.com">jamal@alshayebco.com</a>
             </small>
         </div>
     </footer>
