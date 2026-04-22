@@ -122,7 +122,7 @@ class SiteSettings(db.Model):
     polling_location_ar = db.Column(db.String(300))
     slogan_ar = db.Column(db.String(300), default='بيت ساحور تستحق الأفضل — معاً نبني مستقبلنا')
     slogan_en = db.Column(db.String(300), default='Beit Sahour Deserves the Best — Together We Build Our Future')
-    hero_headline_ar = db.Column(db.String(300), default='نبني بيت ساحور معاً')
+    hero_headline_ar = db.Column(db.String(300), default='مَعًا نَبْنِي الغَدَ الأَفْضَل… مَعًا نَمْضِي وَنَزْدَهِرُ')
     hero_subheadline_ar = db.Column(db.String(400),
         default='قائمة تجمع الخبرات الهندسية والمالية والإدارية والمجتمعية — لخدمة مدينة تستحق الأفضل.')
     hero_intro_ar = db.Column(db.Text, default='قائمة بيت ساحور للبناء والتنمية — خبرات متنوعة تخدم المدينة')
