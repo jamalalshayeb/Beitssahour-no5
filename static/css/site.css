@@ -593,9 +593,12 @@ img { max-width: 100%; height: auto; display: block; }
 .footer-bottom .credit a { color: var(--gold); text-decoration: none; font-weight: 600; }
 .footer-bottom .credit a:hover { text-decoration: underline; }
 .footer-bottom .credit-logo {
-    height: 28px; width: auto; display: block;
-    background: #fff; padding: 4px 8px; border-radius: var(--r-sm);
+    height: 56px; width: auto; display: block;
+    background: #fff; padding: 6px 14px; border-radius: var(--r-sm);
     transition: opacity var(--dur-fast) var(--ease);
+}
+@media (max-width: 520px) {
+    .footer-bottom .credit-logo { height: 44px; padding: 5px 10px; }
 }
 .footer-bottom .credit-brand:hover .credit-logo { opacity: 0.85; }
 .footer-bottom .credit-sep { opacity: 0.5; }
