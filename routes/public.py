@@ -145,6 +145,12 @@ def join():
     return render_template('join.html')
 
 
+@public_bp.route('/wedding')
+def wedding():
+    # Playful standalone wedding invitation (not part of the campaign site nav).
+    return render_template('wedding.html')
+
+
 @public_bp.route('/sitemap.xml')
 def sitemap():
     pages = [
